@@ -1,4 +1,4 @@
-package com.alewar.jason;
+package com.alewar.jason.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -23,6 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alewar.jason.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,31 +38,29 @@ import java.util.Locale;
 
 public class CalculatorActivity extends Activity implements View.OnClickListener{
 
-    private final String[] months = {"January", "February", "March", "April", "May", "June",
+    private final String[] MONTHS = {"January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"};
-    //    private final int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
     private EditText e_day, e_month, e_year;
     private TextView twenty, thirty, thirtyOne;
     private Button calculate, reset;
     private RelativeLayout result;
     private SimpleDateFormat sdf;
     private Calendar c, c1, c2, c3;
-    private String dateInString;
+    private String dateAsString;
     private Context mContext;
     private ImageButton calendar_icon;
 
     private TextView currentMonth, currentYear;
-    private Button selectedDayMonthYearButton;
     private ImageView prevMonth, nextMonth, prevYear, nextYear;
     private GridView calendarView;
     private GridCellAdapter adapter;
-    private Calendar _calendar;
+    private Calendar calendar;
     @SuppressLint("NewApi")
     private int month, year;
     @SuppressWarnings("unused")
     @SuppressLint({ "NewApi", "NewApi", "NewApi", "NewApi" })
     private final DateFormat dateFormatter = new DateFormat();
-    private static final String dateTemplate = "dd-MM-yyyy";
     private String theday, themonth, theyear;
     private Dialog dialog;
     private String[] dateToday;
@@ -75,6 +75,10 @@ public class CalculatorActivity extends Activity implements View.OnClickListener
         sdf = new SimpleDateFormat("dd-MM-yyyy");
         String t = sdf.format(today);
         dateToday = t.split("-");
+        initFields();
+    }
+
+    private void initFields() {
         result = (RelativeLayout)findViewById(R.id.result);
         e_day = (EditText)findViewById(R.id.day);
         e_month = (EditText)findViewById(R.id.month);
@@ -86,36 +90,14 @@ public class CalculatorActivity extends Activity implements View.OnClickListener
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                c1 = Calendar.getInstance();
-                c2 = Calendar.getInstance();
-                c3 = Calendar.getInstance();
-                if (e_day.getText().toString().equals("") || e_month.getText().toString().equals("") || e_year.getText().toString().equals("")||Integer.valueOf(e_month.getText().toString())>12||Integer.valueOf(e_day.getText().toString())>31) {
-                    Toast.makeText(mContext, "Invalid date format", Toast.LENGTH_SHORT).show();
-                } else{
-                    dateInString = e_day.getText().toString() + "-" + e_month.getText().toString() + "-" + e_year.getText().toString();
-                    try {
-                        c1.setTime(sdf.parse(dateInString));
-                        c2.setTime(sdf.parse(dateInString));
-                        c3.setTime(sdf.parse(dateInString));
-                        add20months(c1);
-                        add30months(c2);
-                        add31months(c3);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                        Log.e("DATE ERR", "PARSE DATE EXCEPTION");
-                    }
-                    result.setVisibility(View.VISIBLE);
-                }
+                calculateDeadlines();
             }
         });
         reset = (Button)findViewById(R.id.button_reset);
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                result.setVisibility(View.INVISIBLE);
-                e_day.setText(dateToday[0]);
-                e_month.setText(dateToday[1]);
-                e_year.setText(dateToday[2]);
+                resetDateToToday();
             }
         });
         e_day.setText(dateToday[0]);
@@ -126,75 +108,106 @@ public class CalculatorActivity extends Activity implements View.OnClickListener
         calendar_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // custom dialog
-                dialog = new Dialog(mContext);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.my_calendar_view);
-                _calendar = Calendar.getInstance(Locale.getDefault());
-                month = _calendar.get(Calendar.MONTH) + 1;
-                year = _calendar.get(Calendar.YEAR);
-//                selectedDayMonthYearButton = (Button) dialog.findViewById(R.id.selectedDayMonthYear);
-//                selectedDayMonthYearButton.setText("Selected: ");
-
-                currentYear = (TextView) dialog.findViewById(R.id.currentYear);
-                currentYear.setText(dateToday[2]);
-                prevYear = (ImageView) dialog.findViewById(R.id.prevYear);
-                prevYear.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        year--;
-                        setGridCellAdapterToDate(month, year);
-                    }
-                });
-                prevMonth = (ImageView) dialog.findViewById(R.id.prevMonth);
-                prevMonth.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (month <= 1) {
-                            month = 12;
-                            year--;
-                        } else {
-                            month--;
-                        }
-                        setGridCellAdapterToDate(month, year);
-                    }
-                });
-
-                currentMonth = (TextView) dialog.findViewById(R.id.currentMonth);
-                currentMonth.setText(getMonth(Integer.valueOf(dateToday[1])));
-
-                nextMonth = (ImageView) dialog.findViewById(R.id.nextMonth);
-                nextMonth.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (month > 11) {
-                            month = 1;
-                            year++;
-                        } else {
-                            month++;
-                        }
-                        setGridCellAdapterToDate(month, year);
-                    }
-                });
-
-                nextYear = (ImageView) dialog.findViewById(R.id.nextYear);
-                nextYear.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        year++;
-                        setGridCellAdapterToDate(month, year);
-                    }
-                });
-
-                calendarView = (GridView) dialog.findViewById(R.id.calendar);
-
-                // Initialised
-                adapter = new GridCellAdapter(mContext, R.id.calendar_day_gridcell, month, year);
-                adapter.notifyDataSetChanged();
-                calendarView.setAdapter(adapter);
-                dialog.show();
+                showCalendar();
             }
         });
+    }
+
+    private void showCalendar() {
+        dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.my_calendar_view);
+        calendar = Calendar.getInstance(Locale.getDefault());
+        month = calendar.get(Calendar.MONTH) + 1;
+        year = calendar.get(Calendar.YEAR);
+
+        currentYear = (TextView) dialog.findViewById(R.id.currentYear);
+        currentYear.setText(dateToday[2]);
+        prevYear = (ImageView) dialog.findViewById(R.id.prevYear);
+        prevYear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                year--;
+                setGridCellAdapterToDate(month, year);
+            }
+        });
+        prevMonth = (ImageView) dialog.findViewById(R.id.prevMonth);
+        prevMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (month <= 1) {
+                    month = 12;
+                    year--;
+                } else {
+                    month--;
+                }
+                setGridCellAdapterToDate(month, year);
+            }
+        });
+
+        currentMonth = (TextView) dialog.findViewById(R.id.currentMonth);
+        currentMonth.setText(getMonth(Integer.valueOf(dateToday[1])));
+
+        nextMonth = (ImageView) dialog.findViewById(R.id.nextMonth);
+        nextMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (month > 11) {
+                    month = 1;
+                    year++;
+                } else {
+                    month++;
+                }
+                setGridCellAdapterToDate(month, year);
+            }
+        });
+
+        nextYear = (ImageView) dialog.findViewById(R.id.nextYear);
+        nextYear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                year++;
+                setGridCellAdapterToDate(month, year);
+            }
+        });
+
+        calendarView = (GridView) dialog.findViewById(R.id.calendar);
+
+        // Initialised
+        adapter = new GridCellAdapter(mContext, R.id.calendar_day_gridcell, month, year);
+        adapter.notifyDataSetChanged();
+        calendarView.setAdapter(adapter);
+        dialog.show();
+    }
+
+    private void resetDateToToday() {
+        result.setVisibility(View.INVISIBLE);
+        e_day.setText(dateToday[0]);
+        e_month.setText(dateToday[1]);
+        e_year.setText(dateToday[2]);
+    }
+
+    private void calculateDeadlines() {
+        c1 = Calendar.getInstance();
+        c2 = Calendar.getInstance();
+        c3 = Calendar.getInstance();
+        if (e_day.getText().toString().equals("") || e_month.getText().toString().equals("") || e_year.getText().toString().equals("")||Integer.valueOf(e_month.getText().toString())>12||Integer.valueOf(e_day.getText().toString())>31) {
+            Toast.makeText(mContext, "Invalid date format", Toast.LENGTH_SHORT).show();
+        } else{
+            dateAsString = e_day.getText().toString() + "-" + e_month.getText().toString() + "-" + e_year.getText().toString();
+            try {
+                c1.setTime(sdf.parse(dateAsString));
+                c2.setTime(sdf.parse(dateAsString));
+                c3.setTime(sdf.parse(dateAsString));
+                add20months(c1);
+                add30months(c2);
+                add31months(c3);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                Log.e("DATE ERR", "PARSE DATE EXCEPTION");
+            }
+            result.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -225,24 +238,24 @@ public class CalculatorActivity extends Activity implements View.OnClickListener
         sdf = new SimpleDateFormat("dd-MM-yyyy");
 
         Date resultdate = new Date(c.getTimeInMillis());   // Get new time
-        dateInString = sdf.format(resultdate);
-        twenty.setText(dateInString);
+        dateAsString = sdf.format(resultdate);
+        twenty.setText(dateAsString);
     }
     private void add30months(Calendar c){
         c.add(Calendar.MONTH, 30);
         sdf = new SimpleDateFormat("dd-MM-yyyy");
 
         Date resultdate = new Date(c.getTimeInMillis());   // Get new time
-        dateInString = sdf.format(resultdate);
-        thirty.setText(dateInString);
+        dateAsString = sdf.format(resultdate);
+        thirty.setText(dateAsString);
     }
     private void add31months(Calendar c){
         c.add(Calendar.MONTH, 31);
         sdf = new SimpleDateFormat("dd-MM-yyyy");
 
         Date resultdate = new Date(c.getTimeInMillis());   // Get new time
-        dateInString = sdf.format(resultdate);
-        thirtyOne.setText(dateInString);
+        dateAsString = sdf.format(resultdate);
+        thirtyOne.setText(dateAsString);
     }
 
     /**
@@ -253,7 +266,7 @@ public class CalculatorActivity extends Activity implements View.OnClickListener
     private void setGridCellAdapterToDate(int month, int year) {
         adapter = new GridCellAdapter(getApplicationContext(),
                 R.id.calendar_day_gridcell, month, year);
-        _calendar.set(year, month - 1, _calendar.get(Calendar.DAY_OF_MONTH));
+        calendar.set(year, month - 1, calendar.get(Calendar.DAY_OF_MONTH));
         currentMonth.setText(getMonth(month));
         currentYear.setText(String.valueOf(year));
         adapter.notifyDataSetChanged();
@@ -574,8 +587,8 @@ public class CalculatorActivity extends Activity implements View.OnClickListener
     }
 
     private void setMonth(String month){
-        for(int i=0;i<months.length;i++){
-            if(month.equals(months[i])){
+        for(int i=0;i< MONTHS.length;i++){
+            if(month.equals(MONTHS[i])){
                 String aux = "";
                 if(i<9){
                     i++;
@@ -590,6 +603,6 @@ public class CalculatorActivity extends Activity implements View.OnClickListener
     }
 
     private String getMonth(int month){
-        return months[month-1];
+        return MONTHS[month-1];
     }
 }

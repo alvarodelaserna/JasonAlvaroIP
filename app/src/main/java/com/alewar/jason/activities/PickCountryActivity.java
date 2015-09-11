@@ -1,9 +1,8 @@
-package com.alewar.jason;
+package com.alewar.jason.activities;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,10 +13,12 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.alewar.jason.R;
+
 
 public class PickCountryActivity extends Activity {
 
-    private String[] country;
+    private String[] countries;
     private String whichCountry, type;
     private Spinner spinner;
     private Button button;
@@ -37,16 +38,14 @@ public class PickCountryActivity extends Activity {
         type = intent.getStringExtra("type");
         head.setText(type);
         if(type.equals("PCT")){
-            // storing string resources into Array
-            country = getResources().getStringArray(R.array.array_pct);
+            countries = getResources().getStringArray(R.array.array_pct);
         }else if(type.equals("EP")){
-            // storing string resources into Array
-            country = getResources().getStringArray(R.array.array_euro);
+            countries = getResources().getStringArray(R.array.array_euro);
         }
         spinner = (Spinner) findViewById(R.id.spinner);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<String> adapterCountries = new ArrayAdapter(this, R.layout.spinner_item, country);
+        ArrayAdapter<String> adapterCountries = new ArrayAdapter(this, R.layout.spinner_item, countries);
         // Specify the layout to use when the list of choices appears
         adapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
@@ -67,7 +66,7 @@ public class PickCountryActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whichCountry = country[countryIndex];
+                whichCountry = countries[countryIndex];
                 DisplayCountry(countryIndex, whichCountry);
             }
         });
