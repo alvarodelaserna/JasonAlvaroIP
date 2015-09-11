@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".PickCountryActivity"
+    android:background="@drawable/background2">
+
+    <TextView
+        android:id="@+id/section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="TYPE"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:textColor="#f26322"/>
+    <Spinner
+        android:background="@drawable/the_border"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:id="@+id/spinner"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/select_country"
+        android:text="@string/choose_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/spinner"
+        android:layout_alignLeft="@+id/spinner"
+        android:layout_marginBottom="20dp"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/button_go"
+        android:textSize="20sp"
+        android:id="@+id/button"
+        android:layout_below="@+id/spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
+
+</RelativeLayout>

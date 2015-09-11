@@ -1,0 +1,151 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/background2">
+
+    <TextView
+        android:id="@+id/validation_type"
+        android:text="Direct (Paris Convention) filing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="30sp"
+        android:textColor="#f26322"/>
+
+    <TextView
+        android:id="@+id/country_acronym"
+        android:text="CH/LI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/validation_type"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="15dp"
+        android:textSize="45sp"
+        android:textColor="@android:color/white"/> <!--#00217a-->
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/country_acronym"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="5dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pct_power_of_attorney"
+                android:layout_weight="0.3"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:id="@+id/power_of_attorney"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:text="Value"
+                android:layout_weight="0.7"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#f26322"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="5dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pct_assignments"
+                android:layout_weight="0.3"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:id="@+id/assignments"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:text="Value"
+                android:layout_weight="0.7"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#f26322"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="5dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pct_language"
+                android:layout_weight="0.3"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:id="@+id/language"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:text="Value"
+                android:layout_weight="0.7"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#f26322"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="5dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pct_excess_claim_fee"
+                android:layout_weight="0.3"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:id="@+id/excess_claim_fee"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:text="Value"
+                android:layout_weight="0.7"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#f26322"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="5dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pct_examination_request"
+                android:layout_weight="0.3"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:id="@+id/examination_request"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:text="Value"
+                android:layout_weight="0.7"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#f26322"/>
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>
