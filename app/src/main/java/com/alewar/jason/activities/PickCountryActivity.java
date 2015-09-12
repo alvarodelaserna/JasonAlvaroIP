@@ -37,31 +37,10 @@ public class PickCountryActivity extends Activity {
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
         head.setText(type);
-        if(type.equals("PCT")){
-            countries = getResources().getStringArray(R.array.array_pct);
-        }else if(type.equals("EP")){
-            countries = getResources().getStringArray(R.array.array_euro);
-        }
         spinner = (Spinner) findViewById(R.id.spinner);
+        initialiseCountries();
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<String> adapterCountries = new ArrayAdapter(this, R.layout.spinner_item, countries);
-        // Specify the layout to use when the list of choices appears
-        adapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapterCountries);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // your code here
-                countryIndex = parentView.getSelectedItemPosition();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-        });
+        spinnerSetup();
         button = (Button)findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,27 +51,29 @@ public class PickCountryActivity extends Activity {
         });
     }
 
+    private void spinnerSetup() {
+        ArrayAdapter<String> adapterCountries = new ArrayAdapter(this, R.layout.spinner_item, countries);
+        adapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapterCountries);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                countryIndex = parentView.getSelectedItemPosition();
+            }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_pick_country, menu);
-        return true;
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // do nothing
+            }
+        });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void initialiseCountries() {
+        if(type.equals("PCT")){
+            countries = getResources().getStringArray(R.array.array_pct);
+        }else if(type.equals("EP")){
+            countries = getResources().getStringArray(R.array.array_euro);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void DisplayCountry(int index, String name){
