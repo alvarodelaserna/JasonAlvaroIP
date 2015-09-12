@@ -39,7 +39,6 @@ public class PickCountryActivity extends Activity {
         head.setText(type);
         spinner = (Spinner) findViewById(R.id.spinner);
         initialiseCountries();
-
         spinnerSetup();
         button = (Button)findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
