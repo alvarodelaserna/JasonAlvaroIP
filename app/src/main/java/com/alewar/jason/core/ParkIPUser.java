@@ -7,8 +7,8 @@ import android.util.Log;
 /**
  * Created by alvaro on 12/09/15.
  */
-public class User {
-    private static final String TAG = User.class.getCanonicalName();
+public class ParkIPUser {
+    private static final String TAG = ParkIPUser.class.getCanonicalName();
 
     private static final String COL_EMAIL = "email";
     private static final String COL_USERNAME = "user_name";
@@ -18,7 +18,7 @@ public class User {
 
     private final SharedPreferences sharedPreferences;
 
-    User() {
+    ParkIPUser() {
         sharedPreferences = ParkIP.getApplication().getSharedPreferences(USER_PREFERENCES, Context.MODE_PRIVATE);
     }
 

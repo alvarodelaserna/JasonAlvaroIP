@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alewar.jason.R;
+import com.alewar.jason.Utils;
 
 
 public class MainActivity extends Activity {
