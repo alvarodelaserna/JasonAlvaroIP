@@ -17,6 +17,10 @@ public class Utils {
             country_acronym_euro;
     private static String[] countryArray;
 
+    public static void spinnerSetup(){
+
+    }
+
     public static void getDisplayByCountry(CountryActivity countryActivity, String name, String[] countries){
         countryArray = countries;
         switch (name){
