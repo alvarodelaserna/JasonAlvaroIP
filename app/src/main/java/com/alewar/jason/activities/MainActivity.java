@@ -30,48 +30,26 @@ public class MainActivity extends Activity {
         pct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToPCT();
+                Utils.goToPCT();
             }
         });
         eu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToEU();
+                Utils.goToEU();
             }
         });
         calculator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToCalculator();
+                Utils.goToCalculator();
             }
         });
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToContact();
+                Utils.goToContact();
             }
         });
-    }
-
-    private void goToPCT(){
-        Intent intent = new Intent(mContext, PickCountryActivity.class);
-        intent.putExtra("type", "PCT");
-        startActivity(intent);
-    }
-
-    private void goToEU(){
-        Intent intent = new Intent(mContext, PickCountryActivity.class);
-        intent.putExtra("type", "EP");
-        startActivity(intent);
-    }
-
-    private void goToCalculator(){
-        Intent intent = new Intent(mContext, CalculatorActivity.class);
-        startActivity(intent);
-    }
-
-    private void goToContact(){
-        Intent intent = new Intent(mContext, ContactActivity.class);
-        startActivity(intent);
     }
 }

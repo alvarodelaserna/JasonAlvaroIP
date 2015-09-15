@@ -1,8 +1,13 @@
 package com.alewar.jason;
 
+import android.content.Intent;
 import android.widget.TextView;
 
+import com.alewar.jason.activities.CalculatorActivity;
+import com.alewar.jason.activities.ContactActivity;
 import com.alewar.jason.activities.CountryActivity;
+import com.alewar.jason.activities.PickCountryActivity;
+import com.alewar.jason.core.ParkIP;
 
 /**
  * Created by alvaro on 11/09/15.
@@ -20,6 +25,32 @@ public class Utils {
 
     public static void spinnerSetup(){
 
+    }
+
+    public static void goToPCT(){
+        Intent intent = new Intent(ParkIP.getContext(), PickCountryActivity.class);
+        intent.putExtra("type", "PCT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ParkIP.getContext().startActivity(intent);
+    }
+
+    public static void goToEU(){
+        Intent intent = new Intent(ParkIP.getContext(), PickCountryActivity.class);
+        intent.putExtra("type", "EP");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ParkIP.getContext().startActivity(intent);
+    }
+
+    public static void goToCalculator(){
+        Intent intent = new Intent(ParkIP.getContext(), CalculatorActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ParkIP.getContext().startActivity(intent);
+    }
+
+    public static void goToContact(){
+        Intent intent = new Intent(ParkIP.getContext(), ContactActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ParkIP.getContext().startActivity(intent);
     }
 
     public static void getDisplayByCountry(CountryActivity countryActivity, String name, String[] countries){
