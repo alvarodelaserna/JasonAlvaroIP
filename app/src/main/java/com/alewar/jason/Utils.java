@@ -1,18 +1,8 @@
 package com.alewar.jason;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.alewar.jason.activities.CountryActivity;
-import com.alewar.jason.core.ParkIP;
-import com.alewar.jason.core.ParkIPDBHelper;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * Created by alvaro on 11/09/15.

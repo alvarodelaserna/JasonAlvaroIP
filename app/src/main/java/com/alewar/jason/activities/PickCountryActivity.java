@@ -38,8 +38,6 @@ public class PickCountryActivity extends Activity {
         type = intent.getStringExtra("type");
         head.setText(type);
         spinner = (Spinner) findViewById(R.id.spinner);
-        initialiseCountries();
-        spinnerSetup();
         button = (Button)findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +46,9 @@ public class PickCountryActivity extends Activity {
                 DisplayCountry(countryIndex, whichCountry);
             }
         });
+
+        initialiseCountries();
+        spinnerSetup();
     }
 
     private void spinnerSetup() {

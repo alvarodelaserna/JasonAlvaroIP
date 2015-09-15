@@ -15,23 +15,16 @@ public class ParkIP extends Application {
     private static ParkIP application;
     private static ParkIPUser user;
 
-    private static SQLiteOpenHelper dbHelper;
-    private static SQLiteDatabase database;
-
     public void onCreate(){
         super.onCreate();
         ParkIP.context = getApplicationContext();
         ParkIP.application = this;
-        dbHelper = new ParkIPDBHelper(this);
-        database = dbHelper.getWritableDatabase();
         user = new ParkIPUser();
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
-        dbHelper.close();
-        dbHelper = null;
     }
 
     public static ParkIP getApplication(){ return ParkIP.application; }
@@ -41,7 +34,5 @@ public class ParkIP extends Application {
     }
 
     public static ParkIPUser getUser(){ return ParkIP.user; }
-
-    public static SQLiteDatabase getDatabaseInstance(){ return ParkIP.database; }
 
 }
